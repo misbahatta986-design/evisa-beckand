@@ -30,6 +30,6 @@ As part of my Web Engineering coursework, I built a full-stack visa application 
 
 This project gave me hands-on experience with full-stack development, REST API design, authentication flows, and building security-conscious backend systems.
 
-Grateful to my supervisor Mam Muniba and teammate Kawaiba for their guidance and collaboration throughout! 🙏
+
 
 #WebDevelopment #NodeJS #Express #MySQL #FullStackDevelopment #JWT #StudentProject #SoftwareEngineering
