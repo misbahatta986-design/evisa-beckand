@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>E-Visa Portal – Notifications</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+  :root {
+    --navy: #0b1d3a;
+    --gold: #c9a84c;
+    --gold2: #e8c96d;
+    --white: #ffffff;
+    --text: #dde8f8;
+    --muted: #8faed4;
+    --card-bg: rgba(255,255,255,0.06);
+    --card-border: rgba(201,168,76,0.25);
+    --radius: 16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+  }
+  nav {
+    background: rgba(11,29,58,0.95);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 0 40px; height: 70px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--navy);
+  }
+  .nav-logo span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 700; color: var(--white);
+  }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .back-btn {
+    display: flex; align-items: center; gap: 8px;
+    color: var(--muted); text-decoration: none;
+    font-size: 14px; transition: color 0.3s;
+  }
+  .back-btn:hover { color: var(--gold2); }
+  .mark-btn {
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold2); font-size: 13px;
+    padding: 8px 16px; border-radius: 8px;
+    cursor: pointer; transition: all 0.3s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .mark-btn:hover { background: rgba(201,168,76,0.2); }
+
+  main { max-width: 760px; margin: 0 auto; padding: 50px 20px; }
+
+  .page-header { margin-bottom: 36px; }
+  .page-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 700; color: var(--white); margin-bottom: 8px;
+  }
+  .page-header h2 span { color: var(--gold2); }
+  .page-header p { font-size: 14px; color: var(--muted); }
+
+  .notif-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .notif-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius); padding: 20px 24px;
+    display: flex; align-items: flex-start; gap: 16px;
+    transition: all 0.3s; position: relative;
+  }
+  .notif-card:hover {
+    border-color: rgba(201,168,76,0.5);
+    transform: translateX(4px);
+  }
+  .notif-card.unread {
+    border-left: 3px solid var(--gold2);
+    background: rgba(201,168,76,0.05);
+  }
+  .notif-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .notif-icon.approved { background: rgba(52,211,153,0.15); color: #34d399; }
+  .notif-icon.rejected { background: rgba(255,107,107,0.15); color: #ff6b6b; }
+  .notif-icon.review   { background: rgba(96,165,250,0.15);  color: #60a5fa; }
+  .notif-icon.default  { background: rgba(201,168,76,0.15);  color: var(--gold2); }
+
+  .notif-content { flex: 1; }
+  .notif-title {
+    font-size: 14px; font-weight: 600; color: var(--white);
+    margin-bottom: 4px;
+  }
+  .notif-msg { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .notif-time {
+    font-size: 11px; color: rgba(255,255,255,0.3);
+    margin-top: 8px; display: flex; align-items: center; gap: 6px;
+  }
+
+  .unread-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold2);
+    position: absolute; top: 20px; right: 20px;
+  }
+
+  .empty-state {
+    text-align: center; padding: 80px 20px;
+    color: var(--muted);
+  }
+  .empty-state i { font-size: 56px; margin-bottom: 20px; color: rgba(255,255,255,0.08); display: block; }
+  .empty-state h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; color: var(--white); margin-bottom: 8px;
+  }
+  .empty-state p { font-size: 14px; }
+
+  .loading { text-align: center; padding: 60px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/dashboard.html" class="nav-logo">
+    <div class="nav-logo-icon"><i class="fas fa-passport"></i></div>
+    <span>E-Visa Portal</span>
+  </a>
+  <div class="nav-right">
+    <button class="mark-btn" onclick="markAllRead()">
+      <i class="fas fa-check-double"></i> Mark All Read
+    </button>
+    <a href="/dashboard.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Dashboard
+    </a>
+  </div>
+</nav>
+
+<main>
+  <div class="page-header">
+    <h2>My <span>Notifications</span></h2>
+    <p>Stay updated with your visa application status changes.</p>
+  </div>
+
+  <div id="notifContainer">
+    <div class="loading">
+      <i class="fas fa-spinner fa-spin"></i> Loading notifications...
+    </div>
+  </div>
+</main>
+
+<script>
+  const API = 'http://localhost:5000/api';
+  const token = localStorage.getItem('token');
+
+  if (!token) window.location.href = '/login.html';
+
+  function getIcon(msg) {
+    if (!msg) return { cls: 'default', icon: 'fa-bell' };
+    msg = msg.toLowerCase();
+    if (msg.includes('approved')) return { cls: 'approved', icon: 'fa-check-circle' };
+    if (msg.includes('rejected')) return { cls: 'rejected', icon: 'fa-times-circle' };
+    if (msg.includes('review'))   return { cls: 'review',   icon: 'fa-magnifying-glass' };
+    return { cls: 'default', icon: 'fa-bell' };
+  }
+
+  function timeAgo(dateStr) {
+    const diff = Math.floor((new Date() - new Date(dateStr)) / 1000);
+    if (diff < 60) return 'Just now';
+    if (diff < 3600) return `${Math.floor(diff/60)} min ago`;
+    if (diff < 86400) return `${Math.floor(diff/3600)} hours ago`;
+    return `${Math.floor(diff/86400)} days ago`;
+  }
+
+  async function loadNotifications() {
+    try {
+      const res = await fetch(`${API}/notifications`, {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      const data = await res.json();
+      const container = document.getElementById('notifContainer');
+
+      if (!data.success || data.data.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-bell-slash"></i>
+            <h3>No Notifications Yet</h3>
+            <p>You'll be notified when your visa application status changes.</p>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = `<div class="notif-list">
+        ${data.data.map(n => {
+          const { cls, icon } = getIcon(n.message);
+          return `
+          <div class="notif-card ${n.is_read ? '' : 'unread'}">
+            ${!n.is_read ? '<div class="unread-dot"></div>' : ''}
+            <div class="notif-icon ${cls}"><i class="fas ${icon}"></i></div>
+            <div class="notif-content">
+              <div class="notif-title">${n.title || 'Application Update'}</div>
+              <div class="notif-msg">${n.message || 'Your application status has been updated.'}</div>
+              <div class="notif-time">
+                <i class="fas fa-clock"></i> ${timeAgo(n.created_at)}
+              </div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>`;
+
+    } catch (err) {
+      document.getElementById('notifContainer').innerHTML =
+        '<div class="loading">Error loading notifications.</div>';
+    }
+  }
+
+  async function markAllRead() {
+    try {
+      await fetch(`${API}/notifications/read`, {
+        method: 'PUT',
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      document.querySelectorAll('.notif-card.unread').forEach(c => c.classList.remove('unread'));
+      document.querySelectorAll('.unread-dot').forEach(d => d.remove());
+    } catch (err) {}
+  }
+
+  loadNotifications();
+</script>
+</body>
+</html>

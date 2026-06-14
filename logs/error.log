@@ -1,0 +1,1 @@
+{"ip":"::1","level":"error","message":"ENOSPC: no space left on device, write","method":"POST","path":"/api/documents/upload/8","requestId":"dc930bf2-8015-4201-9d3e-392db599d096","service":"evisa-backend","stack":"Error: ENOSPC: no space left on device, write","timestamp":"2026-05-22 14:34:55"}

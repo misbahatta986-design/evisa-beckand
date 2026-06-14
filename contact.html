@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>E-Visa Portal – Contact Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+  :root {
+    --navy: #0b1d3a;
+    --gold: #c9a84c;
+    --gold2: #e8c96d;
+    --white: #ffffff;
+    --text: #dde8f8;
+    --muted: #8faed4;
+    --card-bg: rgba(255,255,255,0.06);
+    --card-border: rgba(201,168,76,0.25);
+    --radius: 16px;
+    --success: #34d399;
+    --error: #ff6b6b;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+  /* NAVBAR */
+  nav {
+    position: fixed; top:0; left:0; width:100%; z-index:1000;
+    padding: 0 40px;
+    background: rgba(11,29,58,0.95);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: space-between;
+    height: 72px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--navy);
+    box-shadow: 0 4px 16px rgba(201,168,76,0.4);
+  }
+  .logo-text { display: flex; flex-direction: column; }
+  .logo-text span:first-child {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 700; color: var(--white); line-height: 1.1;
+  }
+  .logo-text span:last-child {
+    font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 4px; list-style: none; }
+  .nav-links a {
+    display: block; padding: 8px 14px;
+    font-size: 13px; font-weight: 500;
+    color: var(--text); text-decoration: none;
+    border-radius: 8px; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold2); }
+  .nav-links a.active { color: var(--gold2); }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: var(--navy) !important; font-weight: 600 !important;
+    box-shadow: 0 4px 16px rgba(201,168,76,0.3);
+  }
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 8px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--white); border-radius: 2px;
+  }
+  .mobile-menu {
+    position: fixed; inset: 0; z-index: 999;
+    background: rgba(11,29,58,0.98);
+    backdrop-filter: blur(20px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 8px;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .mobile-menu.open { opacity: 1; pointer-events: all; }
+  .mobile-menu a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 700;
+    color: var(--text); text-decoration: none; padding: 10px 24px;
+    transition: color 0.3s;
+  }
+  .mobile-menu a:hover { color: var(--gold2); }
+  .mobile-close {
+    position: absolute; top: 24px; right: 24px;
+    background: none; border: none; color: var(--white);
+    font-size: 24px; cursor: pointer;
+  }
+
+  /* HERO */
+  .page-hero {
+    padding: 140px 60px 80px;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 0%, rgba(26,75,140,0.4) 0%, transparent 70%);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--gold); font-size: 11px; font-weight: 600;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-label::before, .section-label::after {
+    content: ''; display: block; width: 28px; height: 1px; background: var(--gold);
+  }
+  .page-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 700; color: var(--white); margin-bottom: 16px;
+  }
+  .page-hero h1 span { color: var(--gold2); }
+  .page-hero p {
+    font-size: 16px; color: var(--muted);
+    max-width: 540px; margin: 0 auto; line-height: 1.7;
+  }
+
+  /* MAIN */
+  main { max-width: 1100px; margin: 0 auto; padding: 80px 40px; }
+
+  /* CONTACT CARDS */
+  .contact-cards {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-bottom: 60px;
+  }
+  .contact-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius); padding: 36px 28px;
+    text-align: center; transition: all 0.3s;
+  }
+  .contact-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(201,168,76,0.5);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  }
+  .contact-card-icon {
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(232,201,109,0.1));
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; color: var(--gold2);
+    margin: 0 auto 20px;
+  }
+  .contact-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 8px;
+  }
+  .contact-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .contact-card a {
+    display: inline-block; margin-top: 12px;
+    color: var(--gold2); font-size: 14px; font-weight: 600;
+    text-decoration: none; transition: opacity 0.3s;
+  }
+  .contact-card a:hover { opacity: 0.8; }
+  .contact-card .hours {
+    font-size: 11px; color: rgba(255,255,255,0.3);
+    margin-top: 6px; letter-spacing: 0.5px;
+  }
+
+  /* FORM SECTION */
+  .form-section {
+    display: grid; grid-template-columns: 1fr 1.5fr;
+    gap: 60px; align-items: start;
+  }
+
+  .form-info h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 700; color: var(--white); margin-bottom: 16px;
+  }
+  .form-info h2 span { color: var(--gold2); }
+  .form-info p { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 32px; }
+
+  .info-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    margin-bottom: 20px;
+  }
+  .info-item-icon {
+    width: 40px; height: 40px;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--gold2); flex-shrink: 0;
+  }
+  .info-item h4 { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+  .info-item p { font-size: 13px; color: var(--muted); }
+
+  /* FORM */
+  .form-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 40px;
+    backdrop-filter: blur(10px);
+  }
+  .form-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 700; color: var(--white);
+    margin-bottom: 28px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .form-card h3 i { color: var(--gold2); font-size: 20px; }
+
+  .input-group { margin-bottom: 20px; }
+  .input-group label {
+    display: block; font-size: 12px; font-weight: 600;
+    color: var(--muted); letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .input-wrap { position: relative; }
+  .input-wrap i {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--muted); font-size: 14px;
+  }
+  .input-wrap input,
+  .input-wrap select {
+    width: 100%; padding: 13px 14px 13px 42px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px; color: var(--white); font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.3s; outline: none; appearance: none;
+  }
+  .input-wrap input:focus,
+  .input-wrap select:focus { border-color: rgba(201,168,76,0.5); }
+  .input-wrap input::placeholder { color: var(--muted); }
+  .input-wrap select option { background: var(--navy); }
+
+  .textarea-wrap { position: relative; }
+  .textarea-wrap i {
+    position: absolute; left: 14px; top: 16px;
+    color: var(--muted); font-size: 14px;
+  }
+  .textarea-wrap textarea {
+    width: 100%; padding: 13px 14px 13px 42px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px; color: var(--white); font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.3s; outline: none;
+    resize: vertical; min-height: 130px;
+  }
+  .textarea-wrap textarea:focus { border-color: rgba(201,168,76,0.5); }
+  .textarea-wrap textarea::placeholder { color: var(--muted); }
+
+  .btn {
+    width: 100%; padding: 15px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: var(--navy); font-weight: 700; font-size: 15px;
+    border: none; border-radius: 10px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.35);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.5); }
+
+  .message {
+    padding: 14px; border-radius: 10px;
+    font-size: 13px; text-align: center;
+    margin-bottom: 20px; display: none;
+  }
+  .message.success {
+    background: rgba(52,211,153,0.15); color: var(--success);
+    border: 1px solid rgba(52,211,153,0.3);
+  }
+  .message.error {
+    background: rgba(255,107,107,0.15); color: var(--error);
+    border: 1px solid rgba(255,107,107,0.3);
+  }
+
+  /* FOOTER */
+  footer {
+    background: rgba(8,20,42,0.98);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 30px 60px; text-align: center; margin-top: 0;
+  }
+  footer p { font-size: 12px; color: rgba(255,255,255,0.3); }
+  footer span { color: var(--gold); }
+
+  @media (max-width: 1024px) {
+    .contact-cards { grid-template-columns: 1fr; }
+    .form-section { grid-template-columns: 1fr; gap: 40px; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .page-hero { padding: 120px 24px 60px; }
+    main { padding: 60px 20px; }
+    footer { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="/e visa.html" class="logo">
+    <div class="logo-icon"><i class="fas fa-passport"></i></div>
+    <div class="logo-text">
+      <span>E-Visa Portal</span>
+      <span>Official Processing System</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/e visa.html">Home</a></li>
+    <li><a href="/login.html">Apply Online</a></li>
+    <li><a href="/dashboard.html">Visa Tracking</a></li>
+    <li><a href="/faq.html">Help / FAQ</a></li>
+    <li><a href="/contact.html" class="nav-cta active">Contact Support</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+  <a href="/e visa.html" onclick="toggleMenu()">Home</a>
+  <a href="/login.html" onclick="toggleMenu()">Apply Online</a>
+  <a href="/dashboard.html" onclick="toggleMenu()">Visa Tracking</a>
+  <a href="/faq.html" onclick="toggleMenu()">Help / FAQ</a>
+  <a href="/contact.html" onclick="toggleMenu()">Contact Support</a>
+</div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="section-label">Get In Touch</div>
+  <h1>Contact <span>Support Team</span></h1>
+  <p>Have a question or need help with your visa application? Our team is here to assist you every step of the way.</p>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- CONTACT CARDS -->
+  <div class="contact-cards">
+    <div class="contact-card">
+      <div class="contact-card-icon"><i class="fas fa-phone-volume"></i></div>
+      <h3>Helpline</h3>
+      <p>Speak directly with our visa support officers for urgent queries.</p>
+      <a href="tel:+925192000000">+92 51 920 0000</a>
+      <div class="hours">Mon – Fri &nbsp;|&nbsp; 9:00 AM – 5:00 PM</div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-card-icon"><i class="fas fa-envelope"></i></div>
+      <h3>Email Support</h3>
+      <p>Send us your query and we will respond within 24 working hours.</p>
+      <a href="mailto:support@evisa.gov.pk">support@evisa.gov.pk</a>
+      <div class="hours">Response within 24 hours</div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-card-icon"><i class="fas fa-location-dot"></i></div>
+      <h3>Head Office</h3>
+      <p>Visit us at the Directorate General of Immigration & Passports.</p>
+      <a href="#">Get Directions</a>
+      <div class="hours">Islamabad, Pakistan</div>
+    </div>
+  </div>
+
+  <!-- FORM SECTION -->
+  <div class="form-section">
+
+    <!-- LEFT INFO -->
+    <div class="form-info">
+      <h2>Send Us a <span>Message</span></h2>
+      <p>Fill out the form and our support team will get back to you as soon as possible. Please include your reference number if your query is about an existing application.</p>
+
+      <div class="info-item">
+        <div class="info-item-icon"><i class="fas fa-clock"></i></div>
+        <div>
+          <h4>Working Hours</h4>
+          <p>Monday to Friday, 9:00 AM – 5:00 PM (PKT)</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-icon"><i class="fas fa-reply"></i></div>
+        <div>
+          <h4>Response Time</h4>
+          <p>We typically respond within 24 business hours.</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-icon"><i class="fas fa-shield-halved"></i></div>
+        <div>
+          <h4>Secure & Confidential</h4>
+          <p>All communications are encrypted and kept confidential.</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-icon"><i class="fas fa-circle-question"></i></div>
+        <div>
+          <h4>Check FAQ First</h4>
+          <p>Many questions are answered in our <a href="/faq.html" style="color:var(--gold2)">Help Center</a>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-card">
+      <h3><i class="fas fa-paper-plane"></i> Submit Your Query</h3>
+
+      <div class="message" id="formMsg"></div>
+
+      <div class="input-group">
+        <label>Full Name</label>
+        <div class="input-wrap">
+          <i class="fas fa-user"></i>
+          <input type="text" id="name" placeholder="Enter your full name"/>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Email Address</label>
+        <div class="input-wrap">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="email" placeholder="Enter your email"/>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Subject</label>
+        <div class="input-wrap">
+          <i class="fas fa-tag"></i>
+          <select id="subject">
+            <option value="">-- Select Subject --</option>
+            <option value="application">Application Query</option>
+            <option value="documents">Document Upload Issue</option>
+            <option value="status">Status Inquiry</option>
+            <option value="account">Account Problem</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Reference Number (Optional)</label>
+        <div class="input-wrap">
+          <i class="fas fa-hashtag"></i>
+          <input type="text" id="refNo" placeholder="e.g. EV-1234567890"/>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Message</label>
+        <div class="textarea-wrap">
+          <i class="fas fa-message"></i>
+          <textarea id="message" placeholder="Describe your issue or query in detail..."></textarea>
+        </div>
+      </div>
+
+      <button class="btn" onclick="submitForm()">
+        <i class="fas fa-paper-plane"></i> Send Message
+      </button>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2024 <span>E-Visa Follow-Up Processing System</span>. All rights reserved. Government of Pakistan.</p>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').style.background =
+      window.scrollY > 60 ? 'rgba(11,29,58,0.97)' : 'rgba(11,29,58,0.95)';
+  });
+
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  function showMsg(msg, type) {
+    const el = document.getElementById('formMsg');
+    el.textContent = msg;
+    el.className = 'message ' + type;
+    el.style.display = 'block';
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function submitForm() {
+    const name    = document.getElementById('name').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value.trim();
+
+    if (!name || !email || !subject || !message) {
+      showMsg('Please fill in all required fields!', 'error');
+      return;
+    }
+
+    // Simulate form submission
+    showMsg('✓ Your message has been sent successfully! We will respond within 24 hours.', 'success');
+
+    // Clear form
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('subject').value = '';
+    document.getElementById('refNo').value = '';
+    document.getElementById('message').value = '';
+  }
+</script>
+</body>
+</html>

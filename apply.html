@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>E-Visa Portal – Apply</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+  :root {
+    --navy: #0b1d3a;
+    --gold: #c9a84c;
+    --gold2: #e8c96d;
+    --white: #ffffff;
+    --text: #dde8f8;
+    --muted: #8faed4;
+    --card-bg: rgba(255,255,255,0.06);
+    --card-border: rgba(201,168,76,0.25);
+    --radius: 16px;
+    --error: #ff6b6b;
+    --success: #34d399;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    background-image: radial-gradient(ellipse at 30% 50%, rgba(26,75,140,0.3) 0%, transparent 60%);
+  }
+
+  nav {
+    background: rgba(11,29,58,0.95);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 0 40px; height: 70px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--navy);
+  }
+  .nav-logo span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 700; color: var(--white);
+  }
+  .back-btn {
+    display: flex; align-items: center; gap: 8px;
+    color: var(--muted); text-decoration: none;
+    font-size: 14px; transition: color 0.3s;
+  }
+  .back-btn:hover { color: var(--gold2); }
+
+  main {
+    max-width: 680px; margin: 0 auto;
+    padding: 50px 20px;
+  }
+
+  .page-header { margin-bottom: 36px; }
+  .page-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 700; color: var(--white);
+    margin-bottom: 8px;
+  }
+  .page-header h2 span { color: var(--gold2); }
+  .page-header p { font-size: 14px; color: var(--muted); }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 40px;
+    backdrop-filter: blur(10px);
+  }
+
+  .input-group { margin-bottom: 24px; }
+  .input-group label {
+    display: block; font-size: 12px; font-weight: 600;
+    color: var(--muted); letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .input-wrap { position: relative; }
+  .input-wrap i {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--muted); font-size: 14px;
+  }
+  .input-wrap input,
+  .input-wrap select {
+    width: 100%; padding: 13px 14px 13px 42px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    color: var(--white); font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.3s; outline: none;
+    appearance: none;
+  }
+  .input-wrap input:focus,
+  .input-wrap select:focus {
+    border-color: rgba(201,168,76,0.5);
+  }
+  .input-wrap input::placeholder { color: var(--muted); }
+  .input-wrap select option { background: var(--navy); color: var(--white); }
+
+  /* Document Upload */
+  .upload-area {
+    border: 2px dashed rgba(201,168,76,0.3);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .upload-area:hover {
+    border-color: rgba(201,168,76,0.6);
+    background: rgba(201,168,76,0.05);
+  }
+  .upload-area input[type="file"] {
+    position: absolute; inset: 0;
+    opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .upload-icon { font-size: 36px; color: var(--gold2); margin-bottom: 12px; }
+  .upload-area p { font-size: 14px; color: var(--muted); }
+  .upload-area span { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 6px; display: block; }
+  .file-selected { font-size: 13px; color: var(--success); margin-top: 8px; display: none; }
+
+  .btn {
+    width: 100%; padding: 15px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: var(--navy); font-weight: 700; font-size: 15px;
+    border: none; border-radius: 10px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.35);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.5); }
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .message {
+    padding: 14px; border-radius: 10px;
+    font-size: 13px; text-align: center;
+    margin-bottom: 20px; display: none;
+  }
+  .message.error { background: rgba(255,107,107,0.15); color: var(--error); border: 1px solid rgba(255,107,107,0.3); }
+  .message.success { background: rgba(52,211,153,0.15); color: var(--success); border: 1px solid rgba(52,211,153,0.3); }
+
+  .divider {
+    border: none; border-top: 1px solid rgba(255,255,255,0.08);
+    margin: 28px 0;
+  }
+  .section-label {
+    font-size: 13px; font-weight: 600; color: var(--gold);
+    letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/dashboard.html" class="nav-logo">
+    <div class="nav-logo-icon"><i class="fas fa-passport"></i></div>
+    <span>E-Visa Portal</span>
+  </a>
+  <a href="/dashboard.html" class="back-btn">
+    <i class="fas fa-arrow-left"></i> Back to Dashboard
+  </a>
+</nav>
+
+<main>
+  <div class="page-header">
+    <h2>New Visa <span>Application</span></h2>
+    <p>Fill in the details below to submit your visa application.</p>
+  </div>
+
+  <div class="card">
+    <div class="message" id="msg"></div>
+
+    <!-- PERSONAL INFO -->
+    <div class="section-label">
+      <i class="fas fa-user"></i> Personal Information
+    </div>
+
+    <div class="input-group">
+      <label>Full Name</label>
+      <div class="input-wrap">
+        <i class="fas fa-user"></i>
+        <input type="text" id="fullName" placeholder="Enter your full name"/>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Passport Number</label>
+      <div class="input-wrap">
+        <i class="fas fa-passport"></i>
+        <input type="text" id="passportNo" placeholder="e.g. AB1234567"/>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Nationality</label>
+      <div class="input-wrap">
+        <i class="fas fa-flag"></i>
+        <input type="text" id="nationality" placeholder="e.g. Pakistani"/>
+      </div>
+    </div>
+
+    <hr class="divider"/>
+
+    <!-- VISA INFO -->
+    <div class="section-label">
+      <i class="fas fa-file-alt"></i> Visa Information
+    </div>
+
+    <div class="input-group">
+      <label>Visa Type</label>
+      <div class="input-wrap">
+        <i class="fas fa-globe"></i>
+        <select id="visaType">
+          <option value="">-- Select Visa Type --</option>
+          <option value="tourist">Tourist Visa</option>
+          <option value="business">Business Visa</option>
+          <option value="student">Student Visa</option>
+          <option value="work">Work Permit</option>
+          <option value="family">Family Visa</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="divider"/>
+
+    <!-- DOCUMENT UPLOAD -->
+    <div class="section-label">
+      <i class="fas fa-cloud-upload-alt"></i> Document Upload (Optional)
+    </div>
+
+    <div class="input-group">
+      <label>Supporting Document</label>
+      <div class="upload-area" id="uploadArea">
+        <input type="file" id="docFile" accept=".pdf,.jpg,.jpeg,.png" onchange="fileSelected()"/>
+        <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+        <p>Click or drag file here to upload</p>
+        <span>Supported: PDF, JPG, PNG (Max 5MB)</span>
+        <div class="file-selected" id="fileSelected">
+          <i class="fas fa-check-circle"></i> <span id="fileName"></span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn" id="submitBtn" onclick="submitApplication()">
+      <i class="fas fa-paper-plane"></i> Submit Application
+    </button>
+  </div>
+</main>
+
+<script>
+  const API = 'http://localhost:5000/api';
+  const token = localStorage.getItem('token');
+
+  if (!token) window.location.href = '/login.html';
+
+  function fileSelected() {
+    const file = document.getElementById('docFile').files[0];
+    if (file) {
+      document.getElementById('fileSelected').style.display = 'block';
+      document.getElementById('fileName').textContent = file.name;
+    }
+  }
+
+  function showMsg(msg, type) {
+    const el = document.getElementById('msg');
+    el.textContent = msg;
+    el.className = 'message ' + type;
+    el.style.display = 'block';
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  async function submitApplication() {
+    const full_name  = document.getElementById('fullName').value.trim();
+    const passport_no = document.getElementById('passportNo').value.trim();
+    const nationality = document.getElementById('nationality').value.trim();
+    const visa_type  = document.getElementById('visaType').value;
+    const docFile    = document.getElementById('docFile').files[0];
+    const btn        = document.getElementById('submitBtn');
+
+    if (!full_name || !passport_no || !nationality || !visa_type) {
+      showMsg('Please fill in all required fields!', 'error');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+    try {
+      // Step 1: Submit application
+      const res = await fetch(`${API}/applications/apply`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({ full_name, passport_no, nationality, visa_type })
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        showMsg(data.message, 'error');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
+        return;
+      }
+
+      // Step 2: Upload document if selected
+      if (docFile && data.reference_no) {
+        const appRes = await fetch(`${API}/applications/my-applications`, {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const appData = await appRes.json();
+        const latestApp = appData.data[0];
+
+        if (latestApp) {
+          const formData = new FormData();
+          formData.append('document', docFile);
+          await fetch(`${API}/documents/upload/${latestApp.id}`, {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + token },
+            body: formData
+          });
+        }
+      }
+
+      showMsg(`Application submitted! Reference: ${data.reference_no}`, 'success');
+      setTimeout(() => window.location.href = '/dashboard.html', 2000);
+
+    } catch (err) {
+      showMsg('Server error. Please try again.', 'error');
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
+    }
+  }
+</script>
+</body>
+</html>

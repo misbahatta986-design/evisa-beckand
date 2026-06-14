@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>E-Visa Portal – Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+  :root {
+    --navy: #0b1d3a;
+    --gold: #c9a84c;
+    --gold2: #e8c96d;
+    --white: #ffffff;
+    --text: #dde8f8;
+    --muted: #8faed4;
+    --error: #ff6b6b;
+    --success: #34d399;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background-image: radial-gradient(ellipse at 30% 50%, rgba(26,75,140,0.4) 0%, transparent 60%),
+                      radial-gradient(ellipse at 80% 20%, rgba(46,143,207,0.2) 0%, transparent 50%);
+  }
+  .container {
+    width: 100%; max-width: 440px;
+    padding: 20px;
+  }
+  .logo {
+    text-align: center; margin-bottom: 32px;
+  }
+  .logo-icon {
+    width: 56px; height: 56px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    border-radius: 14px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 24px; color: var(--navy);
+    box-shadow: 0 4px 20px rgba(201,168,76,0.4);
+    margin-bottom: 12px;
+  }
+  .logo h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 700;
+    color: var(--white);
+  }
+  .logo p { font-size: 12px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+
+  .card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 20px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+  }
+
+  .tabs {
+    display: flex; margin-bottom: 32px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 10px; padding: 4px;
+  }
+  .tab {
+    flex: 1; padding: 10px;
+    background: none; border: none;
+    color: var(--muted); font-size: 14px; font-weight: 500;
+    border-radius: 8px; cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .tab.active {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: var(--navy); font-weight: 600;
+  }
+
+  .form { display: none; }
+  .form.active { display: block; }
+
+  .input-group { margin-bottom: 20px; }
+  .input-group label {
+    display: block; font-size: 12px; font-weight: 600;
+    color: var(--muted); letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .input-wrap {
+    position: relative;
+  }
+  .input-wrap i {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--muted); font-size: 14px;
+  }
+  .input-wrap input {
+    width: 100%; padding: 12px 14px 12px 40px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    color: var(--white); font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.3s;
+    outline: none;
+  }
+  .input-wrap input:focus {
+    border-color: rgba(201,168,76,0.5);
+  }
+  .input-wrap input::placeholder { color: var(--muted); }
+
+  .btn {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: var(--navy); font-weight: 700; font-size: 15px;
+    border: none; border-radius: 10px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.35);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.5); }
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .message {
+    padding: 12px; border-radius: 8px;
+    font-size: 13px; text-align: center;
+    margin-bottom: 16px; display: none;
+  }
+  .message.error { background: rgba(255,107,107,0.15); color: var(--error); border: 1px solid rgba(255,107,107,0.3); }
+  .message.success { background: rgba(52,211,153,0.15); color: var(--success); border: 1px solid rgba(52,211,153,0.3); }
+
+  .back-link {
+    text-align: center; margin-top: 20px;
+  }
+  .back-link a {
+    color: var(--muted); font-size: 13px; text-decoration: none;
+    transition: color 0.3s;
+  }
+  .back-link a:hover { color: var(--gold2); }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="logo">
+    <div class="logo-icon"><i class="fas fa-passport"></i></div>
+    <h1>E-Visa Portal</h1>
+    <p>Official Processing System</p>
+  </div>
+
+  <div class="card">
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('login')">Login</button>
+      <button class="tab" onclick="switchTab('register')">Register</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div class="form active" id="loginForm">
+      <div class="message" id="loginMsg"></div>
+      <div class="input-group">
+        <label>Email Address</label>
+        <div class="input-wrap">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="loginEmail" placeholder="Enter your email"/>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="loginPassword" placeholder="Enter your password"/>
+        </div>
+      </div>
+      <button class="btn" onclick="login()">
+        <i class="fas fa-sign-in-alt"></i> Login
+      </button>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div class="form" id="registerForm">
+      <div class="message" id="registerMsg"></div>
+      <div class="input-group">
+        <label>Full Name</label>
+        <div class="input-wrap">
+          <i class="fas fa-user"></i>
+          <input type="text" id="regName" placeholder="Enter your full name"/>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Email Address</label>
+        <div class="input-wrap">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="regEmail" placeholder="Enter your email"/>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="regPassword" placeholder="Create a password"/>
+        </div>
+      </div>
+      <button class="btn" onclick="register()">
+        <i class="fas fa-user-plus"></i> Create Account
+      </button>
+    </div>
+  </div>
+
+  <div class="back-link">
+    <a href="/e visa.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
+  </div>
+</div>
+
+<script>
+  const API = 'http://localhost:5000/api';
+
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById(tab + 'Form').classList.add('active');
+  }
+
+  function showMsg(id, msg, type) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.className = 'message ' + type;
+    el.style.display = 'block';
+  }
+
+  async function login() {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    if (!email || !password) {
+      showMsg('loginMsg', 'Email and password required!', 'error');
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        showMsg('loginMsg', 'Login successful! Redirecting...', 'success');
+        setTimeout(() => window.location.href = '/dashboard.html', 1500);
+      } else {
+        showMsg('loginMsg', data.message, 'error');
+      }
+    } catch (err) {
+      showMsg('loginMsg', 'Server error. Please try again.', 'error');
+    }
+  }
+
+  async function register() {
+    const full_name = document.getElementById('regName').value;
+    const email = document.getElementById('regEmail').value;
+    const password = document.getElementById('regPassword').value;
+
+    if (!full_name || !email || !password) {
+      showMsg('registerMsg', 'All fields are required!', 'error');
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ full_name, email, password })
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        showMsg('registerMsg', 'Account created! Please login.', 'success');
+        setTimeout(() => switchTab('login'), 1500);
+      } else {
+        showMsg('registerMsg', data.message, 'error');
+      }
+    } catch (err) {
+      showMsg('registerMsg', 'Server error. Please try again.', 'error');
+    }
+  }
+</script>
+</body>
+</html>
